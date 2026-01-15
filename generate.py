@@ -1,13 +1,15 @@
 import argparse
 import os
-from fn import getAppPath
+from fn import getAppPath, getFileList, printPathAndContent
+from NotValidPathException import NotValidPathException
 
-appPath = getAppPath()
+try:
+    appPath = getAppPath()
+except NotValidPathException as e:
+    print(e)
+    exit()
 
-# pathToFetchContents = input("Type the file path to fetch all contents: ")
-# if isValidPath(pathToFetchContents):
-#     print(f"The given path is {pathToFetchContents} and is valid.")
-# else:
-#     print(f"The given path is {pathToFetchContents} and is not valid.")
+fileList = getFileList(appPath)
 
-
+for fileEntry in fileList:
+    printPathAndContent(fileEntry)
