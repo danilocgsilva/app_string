@@ -11,5 +11,12 @@ except NotValidPathException as e:
 
 fileList = getFileList(appPath)
 
+errorBag = []
 for fileEntry in fileList:
-    printPathAndContent(fileEntry)
+    printPathAndContent(fileEntry, errorBag)
+
+if errorBag:
+    print("\nErrors encountered during file processing:")
+    for error in errorBag:
+        print(error)
+

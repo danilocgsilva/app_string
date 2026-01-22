@@ -23,12 +23,19 @@ def getFileList(path: str) -> Iterator[str]:
         for name in files:
             yield os.path.join(root, name)
 
-def printPathAndContent(fileEntry: str):
-    print(f"## {fileEntry}")
-    print("<start_of_content>")
+def printPathAndContent(fileEntry: str, errorBag: List[str]) -> None:
+    try:
+        fileString = ""
+        fileString += f"## {fileEntry}\n"
+        fileString += "<start_of_content>\n"
 
-    myFile = open(fileEntry)
-    print(myFile.read())
-    myFile.close()
+        myFile = open(fileEntry)
+        fileString += myFile.read()
+        myFile.close()
 
-    print("<end_of_content>")
+        print(fileString)
+
+        print("<end_of_content>")
+    except Exception as e:
+        errorString = f"Error reading file {fileEntry}: {e}"
+        errorBag.append(errorString)
