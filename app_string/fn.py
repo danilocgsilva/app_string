@@ -1,5 +1,5 @@
 import os
-from NotValidPathException import NotValidPathException
+from app_string.NotValidPathException import NotValidPathException
 from typing import List, Iterator
 
 def isValidPath(pathToValidate: str) -> bool:
