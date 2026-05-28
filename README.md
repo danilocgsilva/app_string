@@ -10,4 +10,10 @@ The ordinary AI chat (even those running locally) already do a good job helping 
 
 ## How to use
 
-This is a Python script. In terminal, just run `python generate`, and after this it will ask a path for your application. Then, it will send to the stdout the whole application code from the path provided in the prompt.
+This is a Python installable package script.
+
+First, install it with:
+```
+pip install . --break-system-packages
+```
+Then in terminal, just run `app-string`, and after this it will ask a path for your application. Then, it will send to the stdout the whole application code from the path provided in the prompt.

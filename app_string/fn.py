@@ -1,6 +1,8 @@
 import os
 from app_string.NotValidPathException import NotValidPathException
 from typing import List, Iterator
+from time import sleep
+from app_string.FileListConfig import FileListConfig
 
 def isValidPath(pathToValidate: str) -> bool:
     return os.path.exists(pathToValidate)
@@ -14,28 +16,51 @@ def getAppPath() -> str:
     raise NotValidPathException(f"Invalid path: {pathToFetchContents}")
 
 
-def getFileList(path: str) -> Iterator[str]:
+def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
     """
     Yield all file paths under `path` recursively.
     Skips directories and follows symlinks if they point to files.
     """
     for root, dirs, files in os.walk(path):
+        path_components = root.split("/")
+
+        if file_list_config.ignore_git:
+            if '.git' in path_components:
+                continue
+
+        if file_list_config.ignore_vendor:
+            if 'vendor' in path_components:
+                continue
+
+        if file_list_config.ignore_var_cache:
+            if 'var/cache' in root:
+                continue
+
         for name in files:
-            yield os.path.join(root, name)
+            full_path = os.path.join(root, name)
+            if file_list_config.full_path:
+                yield full_path
+            else:
+                slice_index = len(path)
+                relative_path = full_path[slice_index:]
+                yield relative_path
 
-def printPathAndContent(fileEntry: str, errorBag: List[str]) -> None:
+def printPathAndContent(fileEntry: str, errorBag: List[str], file_list_config: FileListConfig, ignore_content: False) -> None:
     try:
-        fileString = ""
-        fileString += f"## {fileEntry}\n"
-        fileString += "<start_of_content>\n"
+        if not file_list_config.ignore_content:
+            fileString = ""
+            fileString += f"## {fileEntry}\n"
+            fileString += "<start_of_content>\n"
 
-        myFile = open(fileEntry)
-        fileString += myFile.read()
-        myFile.close()
+            myFile = open(fileEntry)
+            fileString += myFile.read()
+            myFile.close()
 
-        print(fileString)
+            print(fileString)
 
-        print("<end_of_content>")
+            print(f"<end_of_content:{fileEntry}>")
+        else:
+            print(fileEntry)
     except Exception as e:
         errorString = f"Error reading file {fileEntry}: {e}"
         errorBag.append(errorString)
