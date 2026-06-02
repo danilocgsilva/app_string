@@ -1,4 +1,5 @@
 import os
+import re
 from app_string.NotValidPathException import NotValidPathException
 from typing import List, Iterator
 from time import sleep
@@ -35,9 +36,13 @@ def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
         if file_list_config.ignore_var_cache:
             if 'var/cache' in root:
                 continue
-
         for name in files:
             full_path = os.path.join(root, name)
+
+            if file_list_config.regex_ignore:
+                if re.compile(file_list_config.regex_ignore).search(full_path):
+                    continue
+
             if file_list_config.full_path:
                 yield full_path
             else:

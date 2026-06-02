@@ -13,6 +13,11 @@ class FileListConfig:
         self._only_path = False
         self._ignore_var_cache = True
         self._full_path = True
+        self._regex_ignore = ""
+
+    @property
+    def regex_ignore(self) -> str:
+        return self._regex_ignore
 
     @property
     def full_path(self) -> bool:
