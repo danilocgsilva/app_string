@@ -49,7 +49,7 @@ pip3 install debugpy --break-system-packages
 3. Run:
 
 ```
-python3 -m debugby --listen 5679 --wait-for-client app_string/cli.py
+python3 -m debugpy --listen 5679 --wait-for-client app_string/cli.py
 ```
 
 

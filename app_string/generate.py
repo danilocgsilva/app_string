@@ -15,7 +15,7 @@ def generate(file_list_config: FileListConfig):
 
     errorBag = []
     for fileEntry in fileList:
-        printPathAndContent(fileEntry, errorBag, file_list_config, True)
+        printPathAndContent(fileEntry, errorBag, False, appPath)
 
     if errorBag:
         print("\nErrors encountered during file processing:")

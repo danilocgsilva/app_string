@@ -50,14 +50,20 @@ def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
                 relative_path = full_path[slice_index:]
                 yield relative_path
 
-def printPathAndContent(fileEntry: str, errorBag: List[str], file_list_config: FileListConfig, ignore_content: False) -> None:
+def printPathAndContent(
+    fileEntry: str, 
+    errorBag: List[str], 
+    ignore_content: bool,
+    path_to_append: str
+) -> None:
     try:
-        if not file_list_config.ignore_content:
+        if not ignore_content:
             fileString = ""
             fileString += f"## {fileEntry}\n"
             fileString += "<start_of_content>\n"
 
-            myFile = open(fileEntry)
+            full_path = f"{path_to_append}{fileEntry}"
+            myFile = open(full_path)
             fileString += myFile.read()
             myFile.close()
 
