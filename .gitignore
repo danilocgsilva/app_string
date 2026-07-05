@@ -2,3 +2,4 @@ __pycache__/**/*
 app_string.egg-info/**/*
 build/**/*
 app_string/__pycache__/**/*
+.idea/**/*

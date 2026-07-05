@@ -63,8 +63,8 @@ def printPathAndContent(
             fileString += f"## {fileEntry}\n"
             fileString += "<start_of_content>\n"
 
-            full_path = f"{path_to_append}{fileEntry}"
-            myFile = open(full_path)
+            # full_path = f"{path_to_append}{fileEntry}"
+            myFile = open(fileEntry)
             fileString += myFile.read()
             myFile.close()
 
