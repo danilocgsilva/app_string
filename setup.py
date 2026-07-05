@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="app-string",
-    version="1.4.1",
+    version="1.5.1",
     author="Danilo Silva",
     author_email="contact@danilocgsilva.me",
     description="Create a long string with all file paths and contents from an application",

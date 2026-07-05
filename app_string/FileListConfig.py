@@ -19,6 +19,10 @@ class FileListConfig:
     def regex_ignore(self) -> str:
         return self._regex_ignore
 
+    @regex_ignore.setter
+    def regex_ignore(self, regex: str):
+        self._regex_ignore = regex
+
     @property
     def full_path(self) -> bool:
         return self._full_path
