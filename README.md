@@ -52,4 +52,22 @@ pip3 install debugpy --break-system-packages
 python3 -m debugpy --listen 5679 --wait-for-client app_string/cli.py
 ```
 
+## How to use
 
+### Basic usage (prompts for path)
+app-string
+
+### Specify path directly
+app-string /path/to/directory
+
+### Don't ignore .git directories
+app-string --no-ignore-git /path/to/directory
+
+### Only show paths, not contents
+app-string --only-path /path/to/directory
+
+### Use regex to ignore files
+app-string --regex-ignore ".*\.pyc|__pycache__" /path/to/directory
+
+### Multiple options
+app-string --no-ignore-git --no-ignore-node-modules --only-path /path/to/directory

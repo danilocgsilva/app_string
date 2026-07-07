@@ -64,7 +64,7 @@ def printPathAndContent(
             fileString += "<start_of_content>\n"
 
             # full_path = f"{path_to_append}{fileEntry}"
-            myFile = open(fileEntry)
+            myFile = open(fileEntry, 'r', encoding='utf-8', errors='ignore')
             fileString += myFile.read()
             myFile.close()
 
