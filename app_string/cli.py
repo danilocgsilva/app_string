@@ -11,6 +11,7 @@ def main():
     parser.add_argument("--no-ignore-node-modules", action="store_true", help="Don't ignore node_modules directories")
     parser.add_argument("--no-ignore-vendor", action="store_true", help="Don't ignore vendor directories")
     parser.add_argument("--no-ignore-var-cache", action="store_true", help="Don't ignore var/cache directories")
+    parser.add_argument("--no-ignore-file", action="store_true", help="Don't use .app-string-ignore file")
     parser.add_argument("--only-path", action="store_true", help="Only show file paths, not contents")
     parser.add_argument("--full-path", action="store_true", help="Show full paths instead of relative paths")
     parser.add_argument("--regex-ignore", help="Regex pattern to ignore files/directories")
@@ -29,6 +30,8 @@ def main():
         file_list_config.ignore_vendor = False
     if args.no_ignore_var_cache:
         file_list_config.ignore_var_cache = False
+    if args.no_ignore_file:
+        file_list_config.ignore_file = False
     if args.only_path:
         file_list_config.only_path = True
     if args.full_path:

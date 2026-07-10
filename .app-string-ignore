@@ -1,0 +1,7 @@
+^\\build
+^\\app_string.egg-info
+^\\.idea
+^\\.git
+^\\.app-string-ignore
+^\\.vscode
+^\\README.md

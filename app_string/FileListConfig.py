@@ -5,6 +5,7 @@ class FileListConfig:
     _only_path: bool
     _ignore_var_cache: bool
     _full_path: bool
+    _ignore_file: bool
 
     def __init__(self):
         self._ignore_git = True
@@ -14,6 +15,7 @@ class FileListConfig:
         self._ignore_var_cache = True
         self._full_path = True
         self._regex_ignore = ""
+        self._ignore_file = True  # Enable ignore file by default
 
     @property
     def regex_ignore(self) -> str:
@@ -70,4 +72,11 @@ class FileListConfig:
     @only_path.setter
     def only_path(self, value: bool):
         self._only_path = value
-    
+
+    @property
+    def ignore_file(self) -> bool:
+        return self._ignore_file
+
+    @ignore_file.setter
+    def ignore_file(self, value: bool):
+        self._ignore_file = value
