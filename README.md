@@ -18,6 +18,12 @@ pip install . --break-system-packages
 ```
 Then in terminal, just run `app-string`, and after this it will ask a path for your application. Then, it will send to the stdout the whole application code from the path provided in the prompt.
 
+## `.app-string-ignore`
+
+Maybe you have an application that is a little complicated if excluding all non-relevant files, like node_modules, vendor, builds artifacts, dist, etc and there's alot of things that you need to put in `--regex-ignore`
+
+In your project folder, you can put a file called `.app-string-ignore`. In its content, set line by line each of terms that would be put in `--regex-ignore`. So every time that you list the contents, you don't need to provider then exclusion terms again.
+
 ## How to debug (In VSCodium)
 
 1. Install debugpy:
