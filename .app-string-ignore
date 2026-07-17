@@ -1,3 +1,4 @@
+# Windows
 ^\\build
 ^\\app_string.egg-info
 ^\\.idea
@@ -5,3 +6,10 @@
 ^\\.app-string-ignore
 ^\\.vscode
 ^\\README.md
+
+# Linux
+^/.app-string-ignore
+^/__pycache__
+^/build
+^/app_string.egg-info
+^/.vscode
