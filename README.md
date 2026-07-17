@@ -24,6 +24,11 @@ Maybe you have an application that is a little complicated if excluding all non-
 
 In your project folder, you can put a file called `.app-string-ignore`. In its content, set line by line each of terms that would be put in `--regex-ignore`. So every time that you list the contents, you don't need to provider then exclusion terms again.
 
+### What if I want to have more `.app-string-ignore`, in case to ignore evertyhing but the frontend, as example?
+
+Actually, the application reads all files starting with `.app-string-ignore`, and either ignoring those suffixed with `--deactivated`.
+You can have in the application, for example, a file `.app-string-ignore` and `.app-string-ignore-frontend`, then the application will considers both to ignore files. Also, you can a file called `.app-string-ignore-backend--deactivated`. Then it will be *ignored*. The `--deactivated` suffix means to the applicationt that in that time, the current file is *deactivated*, thus in that time it will be ignored to considers the path exclusion. This is a way to easily switch between *activations* and *deactivations* just by renaming them, while keeps the files with it maning very clear by it name.
+
 ## How to debug (In VSCodium)
 
 1. Install debugpy:

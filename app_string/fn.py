@@ -16,19 +16,21 @@ def getAppPath() -> str:
 
     raise NotValidPathException(f"Invalid path: {pathToFetchContents}")
 
-def read_ignore_file(base_path: str) -> List[re.Pattern]:
-    """Read ignore patterns from .app-string-ignore file"""
-    ignore_file_path = os.path.join(base_path, '.app-string-ignore')
-    if not os.path.exists(ignore_file_path):
-        return []
-    
+def read_ignore_files(base_path: str) -> List[re.Pattern]:
+    ignore_patterns = []
+
     try:
-        with open(ignore_file_path, 'r', encoding='utf-8') as f:
-            patterns = [line.strip() for line in f if line.strip() and not line.startswith('#')]
-        return [re.compile(pattern) for pattern in patterns]
+        for filename in os.listdir(base_path):
+            if filename.startswith('.app-string-ignore') and not filename.endswith('--deactivated'):
+                file_path = os.path.join(base_path, filename)
+                if os.path.isfile(file_path):
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        patterns = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+                    ignore_patterns.extend([re.compile(pattern) for pattern in patterns])
     except Exception as e:
-        print(f"Warning: Could not read ignore file {ignore_file_path}: {e}")
-        return []
+        print(f"Warning: Could not read ignore files in {base_path}: {e}")
+
+    return ignore_patterns
 
 def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
     """
@@ -37,18 +39,18 @@ def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
     """
     # Get ignore patterns from both CLI and file
     ignore_patterns = []
-    
-    # Add patterns from .app-string-ignore file if enabled
+
+    # Add patterns from .app-string-ignore* files (excluding --deactivated ones)
     if file_list_config.ignore_file:
-        ignore_patterns.extend(read_ignore_file(path))
-    
+        ignore_patterns.extend(read_ignore_files(path))
+
     # Add patterns from command line regex
     if file_list_config.regex_ignore:
         try:
             ignore_patterns.append(re.compile(file_list_config.regex_ignore))
         except re.error as e:
             print(f"Warning: Invalid regex pattern '{file_list_config.regex_ignore}': {e}")
-    
+
     for root, dirs, files in os.walk(path):
         path_components = root.split("/")
 
@@ -67,14 +69,14 @@ def getFileList(path: str, file_list_config: FileListConfig) -> Iterator[str]:
         for file_name in files:
             full_path = os.path.join(root, file_name)
             relative_path = full_path[len(path):]
-            
+
             # Check if file matches any ignore pattern
             should_ignore = False
             for pattern in ignore_patterns:
                 if pattern.search(relative_path):
                     should_ignore = True
                     break
-            
+
             if should_ignore:
                 continue
 
