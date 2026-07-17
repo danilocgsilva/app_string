@@ -21,12 +21,13 @@ def read_ignore_files(base_path: str) -> List[re.Pattern]:
 
     try:
         for filename in os.listdir(base_path):
-            if filename.startswith('.app-string-ignore') and not filename.endswith('--deactivated'):
+            if filename.startswith('.app-string-ignore') and not filename.endswith('--deactivated') and not and not re.search(r'\.*$', filename):
                 file_path = os.path.join(base_path, filename)
                 if os.path.isfile(file_path):
                     with open(file_path, 'r', encoding='utf-8') as f:
-                        patterns = [line.strip() for line in f if line.strip() and not line.startswith('#')]
-                    ignore_patterns.extend([re.compile(pattern) for pattern in patterns])
+                        lines = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+                    if lines:
+                        ignore_patterns.extend([re.compile(pattern) for pattern in lines])
     except Exception as e:
         print(f"Warning: Could not read ignore files in {base_path}: {e}")
 
