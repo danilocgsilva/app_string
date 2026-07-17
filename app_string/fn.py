@@ -21,7 +21,7 @@ def read_ignore_files(base_path: str) -> List[re.Pattern]:
 
     try:
         for filename in os.listdir(base_path):
-            if filename.startswith('.app-string-ignore') and not filename.endswith('--deactivated') and not re.search(r'\.*$', filename):
+            if filename.startswith('.app-string-ignore') and not filename.endswith('--deactivated') and not re.search(r'^\..*\..*$', filename):
                 file_path = os.path.join(base_path, filename)
                 if os.path.isfile(file_path):
                     with open(file_path, 'r', encoding='utf-8') as f:
